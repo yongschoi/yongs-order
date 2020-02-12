@@ -1,0 +1,45 @@
+spring:
+  profiles:
+    active: window-dev
+---
+server:
+  port: 8080
+
+logging:
+  level:
+    yongs:
+      temp: DEBUG
+    com:
+      netflix:
+        eureka: OFF
+        discovery: OFF  
+      
+spring:
+  profiles: window-dev
+  application:
+    name: yongs-order  
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/flex
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: order
+      enable-auto-commit: false
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: manual-immediate
+       
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: localhost
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
