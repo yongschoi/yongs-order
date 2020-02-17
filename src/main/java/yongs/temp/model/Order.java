@@ -2,6 +2,7 @@ package yongs.temp.model;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import yongs.temp.vo.Delivery;
@@ -12,6 +13,8 @@ import yongs.temp.vo.User;
 @Document
 @Scope(scopeName = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Order{
+	@Id
+	private String id;
 	private String no; // ORD-currentTimeMillis();
 	private int qty;
 	private long opentime;
@@ -19,7 +22,14 @@ public class Order{
 	private User user;
 	private Payment payment;
 	private Delivery delivery;
+	private int status;
 	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public String getNo() {
 		return no;
 	}

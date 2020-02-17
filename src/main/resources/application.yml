@@ -3,7 +3,7 @@ spring:
     active: window-dev
 ---
 server:
-  port: 8080
+  port: 0
 
 logging:
   level:
