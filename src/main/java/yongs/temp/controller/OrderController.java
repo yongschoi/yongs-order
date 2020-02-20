@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import yongs.temp.model.Order;
+import yongs.temp.service.OrderAdminService;
+import yongs.temp.service.OrderEventService;
 import yongs.temp.service.OrderService;
 
 @RestController
@@ -23,28 +25,61 @@ public class OrderController {
 
     @Autowired
     OrderService service;
+    @Autowired
+    OrderAdminService adminService;
+    @Autowired
+    OrderEventService eventService;
     
     @PostMapping("/create") 
     public void create(@RequestBody Order order) throws Exception{
     	logger.debug("yongs-order|OrderController|create({})", order);
-        service.create(order);
+    	eventService.create(order);
     }
     
-    @PutMapping("/user") 
-    public List<Order> findByStatusAndUser(@RequestBody Order order) throws Exception{
-    	logger.debug("yongs-order|OrderController|findByStatusAndUser({})", order);
-        return service.findByStatusAndUser(order);
+    @GetMapping("/statusAll/{email}") 
+    public List<Order> findOnStatusAllByUser(@PathVariable("email") String email) throws Exception{
+    	logger.debug("yongs-order|OrderController|findOnStatusAllByUser({})", email);
+        return service.findOnStatusAllByUser(email);
+    }
+    @GetMapping("/onDelivery/{email}") 
+    public List<Order> findOnDeliveryByUser(@PathVariable("email") String email) throws Exception{
+    	logger.debug("yongs-order|OrderController|findOnDeliveryByUser({})", email);
+        return service.findOnDeliveryByUser(email);
     }
  
-    @GetMapping("/status/{status}") 
-    public List<Order> findByStatus(@PathVariable("status") int status) throws Exception{
-    	logger.debug("yongs-order|OrderController|findByStatus({})", status);
-        return service.findByStatus(status);
+    @PutMapping("/complete/{no}") 
+    public void complete(@PathVariable String no) throws Exception{
+    	logger.debug("yongs-order|OrderController|complete({})", no);
+    	service.complete(no);
+    } 
+    
+    @GetMapping("/onPeriod/{email}/{period}") 
+    public List<Order> findOnPeriodByUser(@PathVariable("email") String email, @PathVariable("period") int period) throws Exception{
+    	logger.debug("yongs-order|OrderController|findOnPeriodByUser({}, {})", email, period);
+        return service.findOnPeriodByUser(period, email);
     }
     
-    @PutMapping("/accept/{no}") 
-    public void accept(@PathVariable String no) throws Exception{
-    	logger.debug("yongs-order|OrderController|accept({})", no);
-    	service.accept(no);
+    @GetMapping("/admin/onPayment") 
+    public List<Order> findOnPayment() throws Exception{
+    	logger.debug("yongs-order|OrderController|findOnPayment()");
+        return adminService.findOnPayment();
+    }
+
+    @GetMapping("/admin/onPrepare") 
+    public List<Order> findOnPrepare() throws Exception{
+    	logger.debug("yongs-order|OrderController|findOnPrepare()");
+        return adminService.findOnPrepare();
+    }
+ 
+    @GetMapping("/admin/onPeriod/{period}") 
+    public List<Order> findOnPeriod(@PathVariable("period") int period) throws Exception{
+    	logger.debug("yongs-order|OrderController|findOnPeriod({})", period);
+        return adminService.findOnPeriod(period);
+    }
+    
+    @PutMapping("/admin/prepare/{no}") 
+    public void prepare(@PathVariable String no) throws Exception{
+    	logger.debug("yongs-order|OrderController|prepare({})", no);
+    	adminService.prepare(no);
     } 
 }
