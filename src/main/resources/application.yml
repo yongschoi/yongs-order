@@ -18,6 +18,11 @@ spring:
   profiles: window-dev
   application:
     name: yongs-order  
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    baseUrl: http://localhost:9411/
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017/flex

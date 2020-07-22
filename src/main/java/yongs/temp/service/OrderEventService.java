@@ -30,8 +30,8 @@ public class OrderEventService {
     OrderRepository repo;
 	@Autowired
     KafkaTemplate<String, String> kafkaTemplate;
-
-	public void create(Order order) throws JsonProcessingException {
+  
+	public void create(Order order) throws JsonProcessingException { 
 		// 주문정보만 생성해서 kafka로 보내고 실제 data 저장은 마지막에 수행한다.
 		long curr = System.currentTimeMillis();
 		String orderNo = "ORD" + curr;	
@@ -70,6 +70,7 @@ public class OrderEventService {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			Order order = mapper.readValue(orderStr, Order.class);
+			// 실제로 삭제될 데이터는 존재하지 않으나, 교육상 삭제 로직 추가.
 			repo.deleteByNo(order.getNo());
 			ack.acknowledge();
 			logger.debug("[ORDER Rollback] Order No [" + order.getNo() + "]");		
