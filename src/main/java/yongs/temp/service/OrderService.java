@@ -16,7 +16,7 @@ import yongs.temp.model.Order;
 public class OrderService {
 	// status 0:주문/결제완료, 1:상품준비, 2:배송중, 3:배송완료 
 	private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
-
+ 
 	@Autowired
     OrderRepository repo;
 
@@ -24,13 +24,13 @@ public class OrderService {
 	public List<Order> findOnStatusAllByUser(String email) {
 		logger.debug("yongs-order|OrderService|findOnStatusAllByUser({})", email);
 		return repo.findOnStatusAllByUser(2, email);
-	} 
+	}  
 	   
 	// 2:배송중 건수 조회 by user
 	public List<Order> findOnDeliveryByUser(String email) {
 		logger.debug("yongs-order|OrderService|findOnDeliveryByUser({})", email);
 		return repo.findOnStatusByUser(2, email);
-	}
+	} 
 	 
 	// 3: 기간별 배송완료 건수 조회 by user
 	public List<Order> findOnPeriodByUser(int period, String email) {		

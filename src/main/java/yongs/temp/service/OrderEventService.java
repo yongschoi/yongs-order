@@ -30,7 +30,7 @@ public class OrderEventService {
     OrderRepository repo;
 	@Autowired
     KafkaTemplate<String, String> kafkaTemplate;
-  
+   
 	public void create(Order order) throws JsonProcessingException { 
 		// 주문정보만 생성해서 kafka로 보내고 실제 data 저장은 마지막에 수행한다.
 		long curr = System.currentTimeMillis();
