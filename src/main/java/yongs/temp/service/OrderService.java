@@ -25,7 +25,7 @@ public class OrderService {
 		logger.debug("yongs-order|OrderService|findOnStatusAllByUser({})", email);
 		return repo.findOnStatusAllByUser(2, email);
 	}  
-	   
+	        
 	// 2:배송중 건수 조회 by user
 	public List<Order> findOnDeliveryByUser(String email) {
 		logger.debug("yongs-order|OrderService|findOnDeliveryByUser({})", email);

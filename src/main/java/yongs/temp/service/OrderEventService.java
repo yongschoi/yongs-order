@@ -19,13 +19,13 @@ import yongs.temp.vo.Delivery;
 public class OrderEventService {
 	// status 0:주문/결제완료, 1:상품준비, 2:배송중, 3:배송완료  
 	private static final Logger logger = LoggerFactory.getLogger(OrderEventService.class);
-
+ 
 	// for sender
 	private static final String ORDER_STOCK_EVT = "order-to-stock";
 	// for listener
 	private static final String DELIVERY_ORDER_EVT = "delivery-to-order";
 	private static final String DELIVERY_UPDATE_EVT = "deliveryUpdate";
-	
+	 
 	@Autowired
     OrderRepository repo;
 	@Autowired
